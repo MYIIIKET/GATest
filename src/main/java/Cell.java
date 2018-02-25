@@ -1,6 +1,5 @@
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.var;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,7 +16,7 @@ public class Cell implements Drawable {
     @Builder.Default
     private double size = 10;
     @Builder.Default
-    private double step = 1.0d;
+    private double step = 10d;
     @Builder.Default
     private Color color = Color.BLACK;
 
@@ -37,38 +36,38 @@ public class Cell implements Drawable {
 
     @Override
     public void moveTo(Drawable drawable) {
-        if (drawable instanceof Cell) {
-            move((Cell) drawable);
+        if (drawable instanceof Target) {
+            moveTo((Target) drawable);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void move(Cell drawable) {
-        double distance;
-        double tX = drawable.getX();
-        double tY = drawable.getY();
-        distance = getDistance(tX, tY);
-        updatePositions(distance, tX, tY);
+    private void moveTo(Target drawable) {
+        int tX = (int) drawable.getX();
+        int tY = (int) drawable.getY();
+        double distance = Util.getDistance(tX-(int)x, tY-(int)y);
+        if (step < distance) {
+            updatePositions(tX, tY);
+        }else {
+            x = tX;
+            y = tY;
+        }
     }
 
-    private void updatePositions(double distance, double tX, double tY) {
+    private void updatePositions(double tX, double tY) {
         double dirX;
         double dirY;
-        dirX = (tX - x) / distance;
-        dirY = (tY - y) / distance;
+        double dir;
+        dirX = (tX - x);
+        dirY = (tY - y);
+        dir = Math.atan2(dirY, dirX);
 
-        x += step * dirX;
-        y += step * dirY;
+        x += Math.cos(dir) * step;
+        y += Math.sin(dir) * step;
     }
 
-    private double getDistance(double tX, double tY) {
-        double distance;
-        double tXabs = Math.abs(tX);
-        double tYabs = Math.abs(tY);
-        distance = (1007 / 1024) * Math.max(tXabs, tYabs)
-                + 441 / 1024 * Math.min(tXabs, tYabs);
-        if (Math.max(tXabs, tYabs) < 16 * Math.min(tXabs, tYabs)) {
-            distance -= (5 * Math.max(tXabs, tYabs)) / 128;
-        }
-        return distance;
-    }
 }

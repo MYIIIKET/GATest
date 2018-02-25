@@ -12,16 +12,15 @@ public class Main {
                     .build());
         }
 
-        Cell cell = Cell.builder()
-                .x(window.getWidth() / 2)
-                .y(window.getHeight() / 2)
-                .color(Color.RED)
+        Target target = Target.builder()
+                .x(Math.random() * window.getWidth())
+                .y(Math.random() * window.getHeight())
                 .build();
-        field.getDrawables().add(cell);
+        field.getDrawables().add(target);
 
         while (true) {
             field.getDrawables().forEach(drawable -> {
-                drawable.moveTo(cell);
+                drawable.moveTo(target);
                 field.repaint();
             });
         }
