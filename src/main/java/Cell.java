@@ -38,11 +38,6 @@ public class Cell implements Drawable {
     public void moveTo(Drawable drawable) {
         if (drawable instanceof Target) {
             moveTo((Target) drawable);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

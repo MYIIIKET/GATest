@@ -1,8 +1,9 @@
 import lombok.Builder;
 import lombok.Data;
 
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 @Data
@@ -10,18 +11,18 @@ import java.awt.geom.Rectangle2D;
 public class Target implements Drawable {
     private double x;
     private double y;
-    private Ellipse2D.Double bounds;
+    private Rectangle2D.Double bounds;
 
     @Builder.Default
-    private double size = 10;
+    private double size = 5;
     @Builder.Default
     private double step = 0;
     @Builder.Default
     private Color color = Color.RED;
 
-    public Ellipse2D.Double getBounds() {
+    public Rectangle2D.Double getBounds() {
         if (bounds == null) {
-            return bounds = new Ellipse2D.Double(x, y, size, size);
+            return bounds = new Rectangle2D.Double(x, y, size, size);
         }
         return bounds;
     }
