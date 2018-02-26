@@ -1,3 +1,4 @@
+import io.jenetics.util.RandomRegistry;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,6 +20,13 @@ public class Cell implements Drawable {
     private double step = 10d;
     @Builder.Default
     private Color color = Color.BLACK;
+
+    public static Cell getRandom() {
+        return Cell.builder()
+                .x(RandomRegistry.getRandom().nextDouble() * 640)
+                .y(RandomRegistry.getRandom().nextDouble() * 480)
+                .build();
+    }
 
     public Ellipse2D.Double getBounds() {
         if (bounds == null) {
