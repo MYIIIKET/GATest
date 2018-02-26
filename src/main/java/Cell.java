@@ -37,23 +37,20 @@ public class Cell implements Drawable {
     @Override
     public void moveTo(Drawable drawable) {
         if (drawable instanceof Target) {
-            moveTo((Target) drawable);
+            Target target = (Target) drawable;
+            moveTo(target.getX(), target.getY());
         }
     }
 
     @Override
     public void moveTo(double tx, double ty) {
-        double distance = Util.getDistance((int) tx - (int) x, (int) ty - (int) y);
+        double distance = Util.getDistance((int) (tx - x), (int) (ty - y));
         if (step < distance) {
             updatePositions(tx, ty);
         } else {
             x = tx;
             y = ty;
         }
-    }
-
-    private void moveTo(Target drawable) {
-        moveTo(drawable.getX(), drawable.getY());
     }
 
     private void updatePositions(double tX, double tY) {
