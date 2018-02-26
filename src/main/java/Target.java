@@ -38,4 +38,9 @@ public class Target implements Drawable {
     public void moveTo(Drawable drawable) {
 
     }
+
+    @Override
+    public void moveTo(double x, double y) {
+
+    }
 }

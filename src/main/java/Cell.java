@@ -41,16 +41,19 @@ public class Cell implements Drawable {
         }
     }
 
-    private void moveTo(Target drawable) {
-        int tX = (int) drawable.getX();
-        int tY = (int) drawable.getY();
-        double distance = Util.getDistance(tX-(int)x, tY-(int)y);
+    @Override
+    public void moveTo(double tx, double ty) {
+        double distance = Util.getDistance((int) tx - (int) x, (int) ty - (int) y);
         if (step < distance) {
-            updatePositions(tX, tY);
-        }else {
-            x = tX;
-            y = tY;
+            updatePositions(tx, ty);
+        } else {
+            x = tx;
+            y = ty;
         }
+    }
+
+    private void moveTo(Target drawable) {
+        moveTo(drawable.getX(), drawable.getY());
     }
 
     private void updatePositions(double tX, double tY) {
