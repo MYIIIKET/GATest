@@ -20,6 +20,10 @@ public class Target implements Drawable {
     @Builder.Default
     private Color color = Color.RED;
 
+    public static Target getStatic() {
+        return Target.builder().x(320).y(240).build();
+    }
+
     public Rectangle2D.Double getBounds() {
         if (bounds == null) {
             return bounds = new Rectangle2D.Double(x, y, size, size);

@@ -9,7 +9,7 @@ import java.awt.geom.Ellipse2D;
 
 @Data
 @Builder
-public class Cell implements Drawable {
+public class Cell implements Drawable, Movable {
     private double x;
     private double y;
     private Ellipse2D.Double bounds;
@@ -21,11 +21,23 @@ public class Cell implements Drawable {
     @Builder.Default
     private Color color = Color.BLACK;
 
+    public static Cell getStatic() {
+        return Cell.builder().x(500).y(30).build();
+    }
+
     public static Cell getRandom() {
         return Cell.builder()
                 .x(RandomRegistry.getRandom().nextDouble() * 640)
                 .y(RandomRegistry.getRandom().nextDouble() * 480)
                 .build();
+    }
+
+    public static Cell[] getRandom(int size) {
+        Cell[] cells = new Cell[size];
+        for (int i = 0; i < size; i++) {
+            cells[i] = Cell.getRandom();
+        }
+        return cells;
     }
 
     public Ellipse2D.Double getBounds() {
@@ -58,6 +70,46 @@ public class Cell implements Drawable {
         } else {
             x = tx;
             y = ty;
+        }
+    }
+
+    @Override
+    public Cell up() {
+        y-=step;
+        return this;
+    }
+
+    @Override
+    public Cell right() {
+        x+=step;
+        return this;
+    }
+
+    @Override
+    public Cell down() {
+        y+=step;
+        return this;
+    }
+
+    @Override
+    public Cell left() {
+        x-=step;
+        return this;
+    }
+
+    @Override
+    public Cell move(Integer dir) {
+        switch (dir) {
+            case 0:
+                return up();
+            case 1:
+                return right();
+            case 2:
+                return down();
+            case 3:
+                return left();
+            default:
+                return this;
         }
     }
 
