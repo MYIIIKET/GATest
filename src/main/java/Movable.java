@@ -7,5 +7,9 @@ public interface Movable {
     Cell right();
     Cell down();
     Cell left();
+    Cell upright();
+    Cell downright();
+    Cell downleft();
+    Cell upleft();
     Cell move(Integer dir);
 }

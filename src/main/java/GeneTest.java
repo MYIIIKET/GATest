@@ -18,6 +18,10 @@ public class GeneTest {
             Command.RIGHT,
             Command.DOWN,
             Command.LEFT
+//            Command.UPRIGHT,
+//            Command.DOWNRIGHT,
+//            Command.DOWNLEFT,
+//            Command.UPLEFT
     );
 
     public static final ISeq<Op<Cell>> TERMINALS = ISeq.of(
@@ -26,12 +30,12 @@ public class GeneTest {
 
     public static final double error(final ProgramGene<Cell> program) {
         return Util.getDistance((int) (SAMPLE.getX() - program.eval(Cell.getStatic()).getX()),
-                (int) (SAMPLE.getY() - program.eval(Cell.getStatic()).getY()));
+                (int) (SAMPLE.getY() - program.eval(Cell.getStatic()).getY())) + program.size();
     }
 
     public static final Codec<ProgramGene<Cell>, ProgramGene<Cell>> CODEC = Codec.of(
             Genotype.of(ProgramChromosome.of(
-                    100,
+                    5,
                     OPERATIONS,
                     TERMINALS
             )),

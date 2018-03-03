@@ -75,25 +75,53 @@ public class Cell implements Drawable, Movable {
 
     @Override
     public Cell up() {
-        y-=step;
+        y -= step;
         return this;
     }
 
     @Override
     public Cell right() {
-        x+=step;
+        x += step;
         return this;
     }
 
     @Override
     public Cell down() {
-        y+=step;
+        y += step;
         return this;
     }
 
     @Override
     public Cell left() {
-        x-=step;
+        x -= step;
+        return this;
+    }
+
+    @Override
+    public Cell upright() {
+        y -= step;
+        x += step;
+        return this;
+    }
+
+    @Override
+    public Cell downright() {
+        y += step;
+        x += step;
+        return this;
+    }
+
+    @Override
+    public Cell downleft() {
+        y += step;
+        x -= step;
+        return this;
+    }
+
+    @Override
+    public Cell upleft() {
+        y -= step;
+        x -= step;
         return this;
     }
 
