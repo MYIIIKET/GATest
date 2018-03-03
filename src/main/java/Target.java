@@ -34,13 +34,4 @@ public class Target implements Drawable {
         graphics2D.fill(new Rectangle2D.Double(x, y, size, size));
     }
 
-    @Override
-    public void moveTo(Drawable drawable) {
-
-    }
-
-    @Override
-    public void moveTo(double x, double y) {
-
-    }
 }
