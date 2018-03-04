@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class GeneTest {
 
     public static final Target SAMPLE = Target.getStatic();
+    public static final Border BORDER = Border.getStatic();
 
     public static final ISeq<Op<Cell>> OPERATIONS = ISeq.of(
             Command.UP,
@@ -29,13 +30,25 @@ public class GeneTest {
     );
 
     public static final double error(final ProgramGene<Cell> program) {
-        return Util.getDistance((int) (SAMPLE.getX() - program.eval(Cell.getStatic()).getX()),
-                (int) (SAMPLE.getY() - program.eval(Cell.getStatic()).getY())) + program.size();
+        double result = 0;
+        Cell[] cell = {Cell.getStatic()};
+        result += Util.getDistance((int) (SAMPLE.getX() - program.eval(Cell.getStatic()).getX()),
+                (int) (SAMPLE.getY() - program.eval(Cell.getStatic()).getY()));
+        for (ProgramGene<Cell> node : program.flattenedNodes()) {
+            if (node.getValue().name() != null && !node.getValue().name().equals("Cell")) {
+                node.getValue().apply(cell);
+                if (BORDER.getBounds().contains(cell[0].getX(), cell[0].getY())) {
+                    result += 1000;
+                }
+            }
+        }
+        result += program.size()*0.00001;
+        return result;
     }
 
     public static final Codec<ProgramGene<Cell>, ProgramGene<Cell>> CODEC = Codec.of(
             Genotype.of(ProgramChromosome.of(
-                    5,
+                    200,
                     OPERATIONS,
                     TERMINALS
             )),
